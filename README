@@ -1,0 +1,68 @@
+== protojazz v0.1
+
+protojazz is a small wrapper around prototypes, similar to the prototype class system
+
+protojazz provides 3 methods:
+
+=== $.proto
+$.proto generates a new prototype
+example:
+   animal = $.proto({
+     noise : 'none',
+     init : function (noise) {
+       this.noise = noise
+     }
+     makeNoise : function () {
+       alert(this.noise);
+     }
+   })
+
+Another syntax for this is:
+   animal = $.proto(function(o){
+     o.noise = 'none';
+     o.makeNoise = function () {
+       alert(this.noise);
+     }
+   }
+
+Objects can be created with the new opperator
+   a = new animal ('nyo');
+
+$.proto also supports inheritance:
+   cat = $.proto(animal, {
+     init : function () {
+       this.parent.init('nyo')
+     }
+   })
+
+Static methods can be declared using the "self" attribute:
+   cat = $.proto(animal, {
+     self : {
+       create : function () {
+         return new cat;
+       }
+     },
+   })
+   cat.create().makeNoise();
+
+=== $.extend
+Transfers the attributes of one object to another.
+   $.extend($, {
+     a : 'aaa'
+   })
+   $.a
+
+You may also use a function to extend object:
+   $.extend($, function () {
+     this.a = 'aaa'
+   })
+
+=== $.extendP
+$.extendP(dest, source) is a shortcut for $.extend(dest.prototype, source)
+
+$.extendP(animal, {
+  fluffiness : 8
+})
+
+c = new Cat;
+c.fluffiness

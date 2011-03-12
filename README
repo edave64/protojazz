@@ -18,9 +18,9 @@ example:
    })
 
 Another syntax for this is:
-   animal = $.proto(function(o){
-     o.noise = 'none';
-     o.makeNoise = function () {
+   animal = $.proto(function(){
+     this.noise = 'none';
+     this.makeNoise = function () {
        alert(this.noise);
      }
    }

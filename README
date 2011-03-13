@@ -2,57 +2,53 @@
 
 protojazz is a small wrapper around prototypes, similar to the prototype class system
 
-protojazz provides 3 methods:
+protojazz provides 4 methods:
 
 === $.proto
 $.proto generates a new prototype
 example:
-   animal = $.proto({
-     noise : 'none',
-     init : function (noise) {
-       this.noise = noise
-     }
-     makeNoise : function () {
-       alert(this.noise);
+   Vector = $.proto({
+     init : function (x,y) {
+       this.x = x;
+       this.y = y;
      }
    })
 
 Another syntax for this is:
-   animal = $.proto(function(){
-     this.noise = 'none';
-     this.makeNoise = function () {
-       alert(this.noise);
-     }
-   }
-
-Objects can be created with the new opperator
-   a = new animal ('nyo');
-
-$.proto also supports inheritance:
-   cat = $.proto(animal, {
-     init : function () {
-       this.parent.init('nyo')
+   Vector = $.proto(function(){
+     this.init = function (x,y) {
+       this.x = x;
+       this.y = y;
      }
    })
 
+Objects can be created with the new opperator
+   v = new Vector (3,4);
+
+$.proto also supports inheritance:
+   SqrVector = $.proto(Vector, {
+     init : function (x) {
+       this.parent.init.call(this,x,x)
+     }
+   })
+Note: calling something like "Vector = $.proto(Vector, {...})" would work, but
+break the connection between Vector and its Subclasses. To avoid this, use
+$.extend, $.extendP and $.applyAttr.
+
 Static methods can be declared using the "self" attribute:
-   cat = $.proto(animal, {
+   Vector = $.proto(Vector, {
      self : {
-       create : function () {
-         return new cat;
+       create : function (x,y) {
+         return new Vector (x,y);
        }
      },
    })
-   cat.create().makeNoise();
+   v = Vector.create(3,4);
 
 Handling getters and setter is usally quite painfull: The methods are named ugly,
 IE has its complete own way. Protojazz makes that easy via the "setter" and
 "getter" attributes:
-   Vector = $.proto({
-     init: function(x,y){
-       this.x = x;
-       this.y = y;
-     },
+   Vector = $.proto(Vector,{
      getters : {
        length : function () {
          return Math.sqrt(this.x*this.x+this.y*this.y);
@@ -65,10 +61,11 @@ IE has its complete own way. Protojazz makes that easy via the "setter" and
        }
      }
    })
-   v = new vector (3,4);
    v.length //=> 5
 If you want to use setters and getters, you include the protojazz-ie file:
   <!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]-->
+
+
 
 === $.extend
 Transfers the attributes of one object to another.
@@ -77,17 +74,36 @@ Transfers the attributes of one object to another.
    })
    $.a
 
-You may also use a function to extend object:
+You may also use a function to extend a object:
    $.extend($, function () {
      this.a = 'aaa'
    })
 
 === $.extendP
-$.extendP(dest, source) is a shortcut for $.extend(dest.prototype, source)
+$.extendP(dest, source) is a shortcut for $.extend(dest.prototype, source).
+These changes also effects the Subclasses:
+   SqrVector = $.proto(Vector, {
+     init : function (x) {
+       this.parent.init.call(this,x,x)
+     }
+   })
+   s = new SqrVector (3)
 
-$.extendP(animal, {
-  fluffiness : 8
-})
+   $.extendP(Vector, {
+     add : function (v) {
+       return new Vector (this.x+v.x,this.y+v.y);
+     }
+   })
 
-c = new Cat;
-c.fluffiness
+   s.add(v);
+
+=== $.applyAttr
+$.applyAttr(dest, source) is the method for handeling getter and setter methods:
+  $.applyAttr(Vector.prototype, {
+    getters: {
+      angle: function(){
+        return Math.atan(this.x/this.y);
+      }
+    }
+  })
+  s.angle //=> 0.7853981633974483

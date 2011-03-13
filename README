@@ -1,4 +1,4 @@
-== protojazz v0.1
+== protojazz v0.2
 
 protojazz is a small wrapper around prototypes, similar to the prototype class system
 
@@ -44,6 +44,31 @@ Static methods can be declared using the "self" attribute:
      },
    })
    cat.create().makeNoise();
+
+Handling getters and setter is usally quite painfull: The methods are named ugly,
+IE has its complete own way. Protojazz makes that easy via the "setter" and
+"getter" attributes:
+   Vector = $.proto({
+     init: function(x,y){
+       this.x = x;
+       this.y = y;
+     },
+     getters : {
+       length : function () {
+         return Math.sqrt(this.x*this.x+this.y*this.y);
+       }
+     },
+     setters : {
+       length: function (l) {
+         this.x = this.x/this.length*l
+         this.y = this.y/this.length*l
+       }
+     }
+   })
+   v = new vector (3,4);
+   v.length //=> 5
+If you want to use setters and getters, you include the protojazz-ie file:
+  <!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]-->
 
 === $.extend
 Transfers the attributes of one object to another.

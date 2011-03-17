@@ -49,54 +49,57 @@
       protojazz is a small wrapper around prototypes, similar to the prototype class system
     </div>
 
-    <p>protojazz is a small wrapper around prototypes, similar to the prototype class system
+    <p>protojazz provides 4 methods:</p>
 
-protojazz provides 4 methods:
-
-=== $.proto
-$.proto generates a new prototype
+<h3>$.proto</h3>
+$.proto generates a new prototype.
 example:
-   Vector = $.proto({
-     init : function (x,y) {
-       this.x = x;
-       this.y = y;
-     }
-   })
+<code>
+Vector = $.proto({
+&nbsp;&nbsp;init : function (x,y) {
+&nbsp;&nbsp;&nbsp;&nbsp;this.x = x;
+&nbsp;&nbsp;&nbsp;&nbsp;this.y = y;
+&nbsp;&nbsp;}
+})
+</code>
 
 Another syntax for this is:
-   Vector = $.proto(function(){
-     this.init = function (x,y) {
-       this.x = x;
-       this.y = y;
-     }
-   })
+<code>
+Vector = $.proto(function(){
+&nbsp;&nbsp;this.init = function (x,y) {
+&nbsp;&nbsp;&nbsp;&nbsp;this.x = x;
+&nbsp;&nbsp;&nbsp;&nbsp;this.y = y;
+&nbsp;&nbsp;}
+})
+</code>
 
-Objects can be created with the new opperator
-   v = new Vector (3,4);
+Objects can be created with the new opperator:
+<code>v = new Vector (3,4);</code>
 
 $.proto also supports inheritance:
-   SqrVector = $.proto(Vector, {
+<code>SqrVector = $.proto(Vector, {
      init : function (x) {
        this.parent.init.call(this,x,x)
      }
-   })
-Note: calling something like "Vector = $.proto(Vector, {...})" would work, but
+})</code>
+<em><strong>Note</strong>: calling something like "Vector = $.proto(Vector, {...})" would work, but
 break the connection between Vector and its Subclasses. To avoid this, use
-$.extend, $.extendP and $.applyAttr.
+$.extend, $.extendP and $.applyAttr.</em>
 
 Static methods can be declared using the "self" attribute:
-   Vector = $.proto(Vector, {
+ <code>Vector = $.proto(Vector, {
      self : {
        create : function (x,y) {
          return new Vector (x,y);
        }
-     },
+     }
    })
-   v = Vector.create(3,4);
+   v = Vector.create(3,4);<code/>
 
 Handling getters and setter is usally quite painfull: The methods are named ugly,
 IE has its complete own way. Protojazz makes that easy via the "setter" and
 "getter" attributes:
+<code>
    Vector = $.proto(Vector,{
      getters : {
        length : function () {
@@ -110,28 +113,26 @@ IE has its complete own way. Protojazz makes that easy via the "setter" and
        }
      }
    })
-   v.length //=> 5
+   v.length //=> 5</code>
 If you want to use setters and getters, you include the protojazz-ie file:
-  <!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]-->
+  <code><!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]--></code>
 
-
-
-=== $.extend
+<h3>$.extend</h3>
 Transfers the attributes of one object to another.
-   $.extend($, {
+   <code>$.extend($, {
      a : 'aaa'
    })
-   $.a
+   $.a</code>
 
 You may also use a function to extend a object:
-   $.extend($, function () {
+   <code>$.extend($, function () {
      this.a = 'aaa'
-   })
+   })</code>
 
-=== $.extendP
+<h3>$.extendP</h3>
 $.extendP(dest, source) is a shortcut for $.extend(dest.prototype, source).
 These changes also effects the Subclasses:
-   SqrVector = $.proto(Vector, {
+   <code>SqrVector = $.proto(Vector, {
      init : function (x) {
        this.parent.init.call(this,x,x)
      }
@@ -144,18 +145,19 @@ These changes also effects the Subclasses:
      }
    })
 
-   s.add(v);
+   s.add(v);</code>
 
-=== $.applyAttr
+<h3>$.applyAttr</h3>
 $.applyAttr(dest, source) is the method for handeling getter and setter methods:
-  $.applyAttr(Vector.prototype, {
+  <code>$.applyAttr(Vector.prototype, {
     getters: {
       angle: function(){
         return Math.atan(this.x/this.y);
       }
     }
   })
-  s.angle //=> 0.7853981633974483</p><h2>Install</h2>
+  s.angle //=> 0.7853981633974483</p></code>
+<h2>Install</h2>
 <p>Paste the protojazz-min.js somewhere on your webspace and put <script src="[scriptsfolder]/protojazz-ie-min.js"></script>
 If you want to use setters and getters, you should include the protojazz-ie-min.js too using <!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]--></p>
 <h2>License</h2>
@@ -180,9 +182,12 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 <h2>Authors</h2>
-<p>edave64 (edave64@googlemail.com)<br/><br/>      </p>
+<p>edave64 (edave64@googlemail.com)
+<br/>
+<br/>      </p>
 <h2>Contact</h2>
-<p> (edave64@googlemail.com)<br/>      </p>
+<p> (edave64@googlemail.com)
+<br/>      </p>
 
 
     <h2>Download</h2>

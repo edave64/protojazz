@@ -15,150 +15,224 @@
     #container {
       margin: 0 auto;
       width: 700px;
+
     }
     h1 { font-size: 3.8em; color: #000000; margin-bottom: 3px; }
     h1 .small { font-size: 0.4em; }
     h1 a { text-decoration: none }
     h2 { font-size: 1.5em; color: #000000; }
-    h3 { text-align: center; color: #000000; }
+    h3 { color: #000000; }
     a { color: #000000; }
     .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
     .download { float: right; }
     pre { background: #000; color: #fff; padding: 15px;}
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
-    code { display : block }
-    .indent { margin-left: 16px; }
+    .code {
+        display : block;
+        font-family: monospace;
+        padding: 4px;
+        margin: 4px;
+        background-color: rgb(35,35,35);
+        border: solid black 1px;
+        color: #fff;
+    }
+    .indent { display : block; margin-left: 16px; }
+    #header {    }
+    .download { margin-right: 128px; }
   </style>
 </head>
 
 <body>
-  <a href="http://github.com/edave64/protojazz"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+<a href="http://github.com/edave64/protojazz"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+<div id="header">
+<div class="download">
+    <a href="http://github.com/edave64/protojazz/zipball/master">
+    <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+    <a href="http://github.com/edave64/protojazz/tarball/master">
+    <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+</div>
+<h1><a href="http://github.com/edave64/protojazz">protojazz</a>
+<span class="small">by <a href="http://github.com/edave64">edave64</a></span></h1>
+</div>
 
-  <div id="container">
+<div id="container">
+<div class="description">
+protojazz is a small wrapper around prototypes, similar to the prototype class system
+</div>
 
-    <div class="download">
-      <a href="http://github.com/edave64/protojazz/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/edave64/protojazz/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="http://github.com/edave64/protojazz">protojazz</a>
-      <span class="small">by <a href="http://github.com/edave64">edave64</a></span></h1>
-
-    <div class="description">
-      protojazz is a small wrapper around prototypes, similar to the prototype class system
-    </div>
-
-    <p>protojazz provides 4 methods:</p>
+<p>protojazz provides 4 methods:</p>
 
 <h3>$.proto</h3>
 $.proto generates a new prototype.
 example:
-<code>
-Vector = $.proto({<br/><div class="indent">
-init : function (x,y) {<br/><div class="indent">
-this.x = x;<br/>
-this.y = y;</div><br/>
-}</div><br/>
-})
-</code>
+<div class="code">
+    Vector = $.proto({
+    <div class="indent">
+        init : function (x,y) {
+        <div class="indent">
+            this.x = x;<br />
+            this.y = y;
+        </div>
+        }
+    </div>
+    })
+</div>
 
 Another syntax for this is:
-<code>
-Vector = $.proto(function(){<br/><div class="indent">
-this.init = function (x,y) {<br/><div class="indent">
-this.x = x;<br/>
-this.y = y;</div><br/>
-}</div><br/>
-})
-</code>
+<div class="code">
+    Vector = $.proto(function(){
+    <div class="indent">
+        this.init = function (x,y) {
+        <div class="indent">
+            this.x = x;<br/>
+            this.y = y;
+        </div>
+        }
+    </div>
+    })
+</div>
 
 Objects can be created with the new opperator:
-<code>v = new Vector (3,4);</code>
+<div class="code">v = new Vector (3,4);</div>
 
 $.proto also supports inheritance:
-<code>SqrVector = $.proto(Vector, {<br/>
-     init : function (x) {<br/>
-       this.parent.init.call(this,x,x)<br/>
-     }<br/>
-})</code>
-<em><strong>Note</strong>: calling something like "Vector = $.proto(Vector, {...})" would work, but
-break the connection between Vector and its Subclasses. To avoid this, use
-$.extend, $.extendP and $.applyAttr.</em>
+<div class="code">
+    SqrVector = $.proto(Vector, {
+    <div class="indent">
+        init : function (x) {
+        <div class="indent">
+        this.parent.init.call(this,x,x)
+        </div>
+        }
+    </div>
+    })
+</div>
+<em>
+    <strong>Note:</strong> calling something like "Vector = $.proto(Vector,
+    {...})" would work, but break the connection between Vector and its
+    Subclasses. To avoid this, use $.extend, $.extendP and $.applyAttr.
+</em>
 
 Static methods can be declared using the "self" attribute:
- <code>Vector = $.proto(Vector, {<br/>
-     self : {<br/>
-       create : function (x,y) {<br/>
-         return new Vector (x,y);<br/>
-       }<br/>
-     }<br/>
-   });<br/>
-   v = Vector.create(3,4);<code/>
+<div class="code">
+    Vector = $.proto(Vector, {
+    <div class="indent">
+        self : {
+        <div class="indent">
+            create : function (x,y) {
+            <div class="indent">
+                return new Vector (x,y);
+            </div>
+            }
+        </div>
+        }
+    </div>
+    });<br/>
+    v = Vector.create(3,4);
+</div>
 
 Handling getters and setter is usally quite painfull: The methods are named ugly,
 IE has its complete own way. Protojazz makes that easy via the "setter" and
 "getter" attributes:
-<code>
-   Vector = $.proto(Vector,{<br/>
-     getters : {<br/>
-       length : function () {<br/>
-         return Math.sqrt(this.x*this.x+this.y*this.y);<br/>
-       }<br/>
-     },<br/>
-     setters : {<br/>
-       length: function (l) {<br/>
-         this.x = this.x/this.length*l<br/>
-         this.y = this.y/this.length*l<br/>
-       }<br/>
-     }<br/>
-   })<br/>
-   v.length //=> 5</code>
+<div class="code">
+    Vector = $.proto(Vector,{
+    <div class="indent">
+        getters : {
+        <div class="indent">
+            length : function () {
+            <div class="indent">
+                return Math.sqrt(this.x*this.x+this.y*this.y);
+            </div>
+            }
+        </div>
+        },
+        setters : {
+        <div class="indent">
+            length: function (l) {
+            <div class="indent">
+                this.x = this.x/this.length*l
+                this.y = this.y/this.length*l
+            </div>
+            }
+        </div>
+        }
+    </div>
+    });<br/>
+    v.length; //=> 5
+</div>
 If you want to use setters and getters, you include the protojazz-ie file:
-  <code><!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]--></code>
+<div class="code">
+    &lt;!--[if IE]&gt;
+    &lt;script src="protojazz-ie-min.js"&gt;&lt;/script&gt;
+    &lt;![endif]--&gt;
+</div>
 
 <h3>$.extend</h3>
 Transfers the attributes of one object to another.
-   <code>$.extend($, {<br/>
-     a : 'aaa'<br/>
-   });<br/>
-   $.a;</code>
+<div class="code">
+    $.extend($, {
+    <div class="indent">
+        a : 'aaa'
+    </div>
+    });<br/>
+    $.a;
+</div>
 
 You may also use a function to extend a object:
-   <code>$.extend($, function () {<br/>
-     this.a = 'aaa'<br/>
-   })</code>
+<div class="code">
+    $.extend($, function () {
+    <div class="indent">
+        this.a = 'aaa'
+    </div>
+    })
+</div>
 
 <h3>$.extendP</h3>
 $.extendP(dest, source) is a shortcut for $.extend(dest.prototype, source).
 These changes also effects the Subclasses:
-   <code>SqrVector = $.proto(Vector, {<br/>
-     init : function (x) {<br/>
-       this.parent.init.call(this,x,x)<br/>
-     }<br/>
-   })<br/>
-   s = new SqrVector (3);
+<div class="code">
+    SqrVector = $.proto(Vector, {
+    <div class="indent">
+        init : function (x) {
+        <div class="indent">
+            this.parent.init.call(this,x,x);
+        </div>
+        }
+    </div>
+    });<br/>
+    s = new SqrVector (3);
 
-   $.extendP(Vector, {<br/>
-     add : function (v) {<br/>
-       return new Vector (this.x+v.x,this.y+v.y);<br/>
-     }<br/>
-   })<br/>
-
-   s.add(v);</code>
+    $.extendP(Vector, {
+    <div class="indent">
+        add : function (v) {
+        <div class="indent">
+            return new Vector (this.x+v.x,this.y+v.y);
+        </div>
+        }
+    </div>
+    });<br/>
+    s.add(v);
+</div>
 
 <h3>$.applyAttr</h3>
 $.applyAttr(dest, source) is the method for handeling getter and setter methods:
-  <code>$.applyAttr(Vector.prototype, {<br/>
-    getters: {<br/>
-      angle: function(){<br/>
-        return Math.atan(this.x/this.y);<br/>
-      }<br/>
-    }<br/>
-  })<br/>
-  s.angle; //=> 0.7853981633974483</p></code>
+<div class="code">
+    $.applyAttr(Vector.prototype, {
+    <div class="indent">
+    getters: {
+    <div class="indent">
+        angle: function(){
+        <div class="indent">
+            return Math.atan(this.x/this.y);
+        </div>
+        }
+    </div>
+    }
+    </div>
+    })<br/>
+    s.angle; //=> 0.7853981633974483
+</div>
 <h2>Install</h2>
 <p>Paste the protojazz-min.js somewhere on your webspace and put <script src="[scriptsfolder]/protojazz-ie-min.js"></script>
 If you want to use setters and getters, you should include the protojazz-ie-min.js too using <!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]--></p>
@@ -208,7 +282,5 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
     </div>
 
   </div>
-
-  
 </body>
 </html>

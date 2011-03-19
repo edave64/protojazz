@@ -1,4 +1,4 @@
-== protojazz v0.2
+== protojazz v0.3
 
 protojazz is a small wrapper around prototypes, similar to the prototype class system
 
@@ -25,10 +25,11 @@ Another syntax for this is:
 Objects can be created with the new opperator
    v = new Vector (3,4);
 
-$.proto also supports inheritance:
+$.proto also supports inheritance and accessing overwritten attributes via the
+parent method:
    SqrVector = $.proto(Vector, {
      init : function (x) {
-       this.parent.init.call(this,x,x)
+       this.parent('init',x,x)
      }
    })
 Note: calling something like "Vector = $.proto(Vector, {...})" would work, but
@@ -44,6 +45,19 @@ Static methods can be declared using the "self" attribute:
      },
    })
    v = Vector.create(3,4);
+
+A special self method is "inherited". "inherited" is called when a new prototype
+is created form this prototype.
+   Modifier = $.proto({
+     self : {
+       inherited: function (newOne) {
+         if (!newOne.self) newOne.self = {}
+         newOne.self.modification = true
+       }
+     },
+   })
+   Modified = $.proto(Modifier, {})
+   Modified.modification #=> true
 
 Handling getters and setter is usally quite painfull: The methods are named ugly,
 IE has its complete own way. Protojazz makes that easy via the "setter" and
@@ -64,8 +78,6 @@ IE has its complete own way. Protojazz makes that easy via the "setter" and
    v.length //=> 5
 If you want to use setters and getters, you include the protojazz-ie file:
   <!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]-->
-
-
 
 === $.extend
 Transfers the attributes of one object to another.
@@ -107,3 +119,4 @@ $.applyAttr(dest, source) is the method for handeling getter and setter methods:
     }
   })
   s.angle //=> 0.7853981633974483
+

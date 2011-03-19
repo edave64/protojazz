@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../lib/protojazz-min.js"></script>
+    <!--[if IE]><script src="../lib/protojazz-ie-min.js"></script><![endif]-->
+    <style>
+        table { width: 100%; }
+        .fail { color: #aa0000;
+        }
+
+        .ok {
+            color: #00aa00;
+        }
+    </style>
+  </head>
+  <body>
+      <h1>Testing Protojazz:</h1>
+      <table id="testing-table">
+          <tr>
+              <th>Test</th>
+              <th>Result</th>
+          </tr>
+          <tr id="js-msg">
+              <td>Javascript</td>
+              <td class="fail">must be activated!</td>
+          </tr>
+      </table>
+      <script>
+          msg = document.getElementById('js-msg').childNodes[3];
+          msg.className = 'ok';
+          msg.innerHTML = 'is activated!';
+          table = document.getElementById('testing-table');
+          msg = table.insertRow(-1);
+          msg.insertCell(-1).innerHTML = 'Prototype definition';
+
+          try {
+              test = $.proto({
+                  init : function (description,func) {
+                      this.element = table.insertRow(-1);
+                      this.element.insertCell(-1).innerHTML = description;
+                      this.test = func;
+                  },
+
+                  run : function () {
+                      try {
+                          if (this.test()) {
+                              msg = this.element.insertCell(-1);
+                              msg.className = 'ok';
+                              msg.innerHTML = 'done! '+(this.message||'');
+                          } else {
+                              msg = this.element.insertCell(-1);
+                              msg.className = 'fail';
+                              msg.innerHTML = 'failed! '+(this.message||'');
+                          }
+                      } catch (e) {
+                          msg = this.element.insertCell(-1);
+                          msg.className = 'fail';
+                          throw e;
+                      }
+                  }
+              })
+              var a = msg.insertCell(-1);
+              a.innerHTML = 'done!';
+              a.className = 'ok';
+          } catch (e) {
+              var a = msg.insertCell(-1);
+              a.innerHTML = 'failed!';
+              a.className = 'fail';
+              throw e;
+          }
+
+          (new test ('testing self property', function () {
+              var test1 = $.proto({
+                  self: { testing: 'works!' }
+              })
+              return (test1.testing == 'works!')
+          })).run()
+
+          var test2,testobj2;
+
+          (new test ('testing instantiation', function () {
+              test2 = $.proto({
+                  test1: function () { return true }
+              })
+              testobj2 = new test2;
+              return !!testobj2.test1();
+          })).run();
+
+          var test3,testobj3;
+
+          (new test ('testing inheritance', function () {
+              test3 = $.proto(test2, {
+                  test2: function () { return true }
+              })
+              testobj3 = new test3;
+              return (!!testobj3.test1()) && (!!testobj3.test2());
+          })).run();
+
+          (new test ('testing extending prototype', function () {
+              $.extendP(test2, {
+                  test3: function () { return true }
+              })
+              return (!!testobj3.test1()) && (!!testobj3.test2()) &&
+                     (!!testobj3.test3());
+          })).run();
+
+          (new test ('testing getters and setters', function () {
+              test4 = $.proto({
+                  getters: {
+                      string: function ()  { return this.str.length }
+                  },
+                  setters: {
+                      string: function (i) { this.str = i + 'abc' }
+                  }
+              })
+              testobj4 = new test4;
+              testobj4.string = 'test';
+              return testobj4.string = 7;
+          })).run();
+
+          (new test ('testing mother inherited method', function () {
+              test51 = $.proto({
+                  self: {
+                      inherited: function (i) { this.passed = i.passed }
+                  },
+                  override: function () {
+                      return 'test';
+                  }
+              })
+              test52 = $.proto(test51,{
+                  passed: true,
+                  override: function () {
+                      return this.parent('override') == 'test'
+                  }
+              })
+              var testobj5 = new test52;
+              return !!test51.passed && testobj5.override()
+                     && typeof testobj5.override() == 'boolean';
+          })).run();
+      </script>
+  </body>
+</html>

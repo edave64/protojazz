@@ -28,7 +28,7 @@
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
     code { display : block }
-    .indent { margin-left: 8px; }
+    .indent { margin-left: 16px; }
   </style>
 </head>
 
@@ -67,11 +67,11 @@ this.y = y;</div><br/>
 
 Another syntax for this is:
 <code>
-Vector = $.proto(function(){<br/>
-&nbsp;&nbsp;this.init = function (x,y) {<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;this.x = x;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;this.y = y;<br/>
-&nbsp;&nbsp;}<br/>
+Vector = $.proto(function(){<br/><div class="indent">
+this.init = function (x,y) {<br/><div class="indent">
+this.x = x;<br/>
+this.y = y;</div><br/>
+}</div><br/>
 })
 </code>
 

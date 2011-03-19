@@ -28,6 +28,7 @@
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
     code { display : block }
+    .indent { margin-left: 8px; }
   </style>
 </head>
 
@@ -56,11 +57,11 @@
 $.proto generates a new prototype.
 example:
 <code>
-Vector = $.proto({<br/>
-&nbsp;&nbsp;init : function (x,y) {<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;this.x = x;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;this.y = y;<br/>
-&nbsp;&nbsp;}<br/>
+Vector = $.proto({<br/><div class="indent">
+init : function (x,y) {<br/><div class="indent">
+this.x = x;<br/>
+this.y = y;</div><br/>
+}</div><br/>
 })
 </code>
 

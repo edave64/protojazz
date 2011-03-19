@@ -56,21 +56,21 @@
 $.proto generates a new prototype.
 example:
 <code>
-Vector = $.proto({
-&nbsp;&nbsp;init : function (x,y) {
-&nbsp;&nbsp;&nbsp;&nbsp;this.x = x;
-&nbsp;&nbsp;&nbsp;&nbsp;this.y = y;
-&nbsp;&nbsp;}
+Vector = $.proto({<br/>
+&nbsp;&nbsp;init : function (x,y) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;this.x = x;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;this.y = y;<br/>
+&nbsp;&nbsp;}<br/>
 })
 </code>
 
 Another syntax for this is:
 <code>
-Vector = $.proto(function(){
-&nbsp;&nbsp;this.init = function (x,y) {
-&nbsp;&nbsp;&nbsp;&nbsp;this.x = x;
-&nbsp;&nbsp;&nbsp;&nbsp;this.y = y;
-&nbsp;&nbsp;}
+Vector = $.proto(function(){<br/>
+&nbsp;&nbsp;this.init = function (x,y) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;this.x = x;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;this.y = y;<br/>
+&nbsp;&nbsp;}<br/>
 })
 </code>
 
@@ -78,104 +78,104 @@ Objects can be created with the new opperator:
 <code>v = new Vector (3,4);</code>
 
 $.proto also supports inheritance:
-<code>SqrVector = $.proto(Vector, {
-     init : function (x) {
-       this.parent.init.call(this,x,x)
-     }
+<code>SqrVector = $.proto(Vector, {<br/>
+     init : function (x) {<br/>
+       this.parent.init.call(this,x,x)<br/>
+     }<br/>
 })</code>
 <em><strong>Note</strong>: calling something like "Vector = $.proto(Vector, {...})" would work, but
 break the connection between Vector and its Subclasses. To avoid this, use
 $.extend, $.extendP and $.applyAttr.</em>
 
 Static methods can be declared using the "self" attribute:
- <code>Vector = $.proto(Vector, {
-     self : {
-       create : function (x,y) {
-         return new Vector (x,y);
-       }
-     }
-   })
+ <code>Vector = $.proto(Vector, {<br/>
+     self : {<br/>
+       create : function (x,y) {<br/>
+         return new Vector (x,y);<br/>
+       }<br/>
+     }<br/>
+   });<br/>
    v = Vector.create(3,4);<code/>
 
 Handling getters and setter is usally quite painfull: The methods are named ugly,
 IE has its complete own way. Protojazz makes that easy via the "setter" and
 "getter" attributes:
 <code>
-   Vector = $.proto(Vector,{
-     getters : {
-       length : function () {
-         return Math.sqrt(this.x*this.x+this.y*this.y);
-       }
-     },
-     setters : {
-       length: function (l) {
-         this.x = this.x/this.length*l
-         this.y = this.y/this.length*l
-       }
-     }
-   })
+   Vector = $.proto(Vector,{<br/>
+     getters : {<br/>
+       length : function () {<br/>
+         return Math.sqrt(this.x*this.x+this.y*this.y);<br/>
+       }<br/>
+     },<br/>
+     setters : {<br/>
+       length: function (l) {<br/>
+         this.x = this.x/this.length*l<br/>
+         this.y = this.y/this.length*l<br/>
+       }<br/>
+     }<br/>
+   })<br/>
    v.length //=> 5</code>
 If you want to use setters and getters, you include the protojazz-ie file:
   <code><!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]--></code>
 
 <h3>$.extend</h3>
 Transfers the attributes of one object to another.
-   <code>$.extend($, {
-     a : 'aaa'
-   })
-   $.a</code>
+   <code>$.extend($, {<br/>
+     a : 'aaa'<br/>
+   });<br/>
+   $.a;</code>
 
 You may also use a function to extend a object:
-   <code>$.extend($, function () {
-     this.a = 'aaa'
+   <code>$.extend($, function () {<br/>
+     this.a = 'aaa'<br/>
    })</code>
 
 <h3>$.extendP</h3>
 $.extendP(dest, source) is a shortcut for $.extend(dest.prototype, source).
 These changes also effects the Subclasses:
-   <code>SqrVector = $.proto(Vector, {
-     init : function (x) {
-       this.parent.init.call(this,x,x)
-     }
-   })
-   s = new SqrVector (3)
+   <code>SqrVector = $.proto(Vector, {<br/>
+     init : function (x) {<br/>
+       this.parent.init.call(this,x,x)<br/>
+     }<br/>
+   })<br/>
+   s = new SqrVector (3);
 
-   $.extendP(Vector, {
-     add : function (v) {
-       return new Vector (this.x+v.x,this.y+v.y);
-     }
-   })
+   $.extendP(Vector, {<br/>
+     add : function (v) {<br/>
+       return new Vector (this.x+v.x,this.y+v.y);<br/>
+     }<br/>
+   })<br/>
 
    s.add(v);</code>
 
 <h3>$.applyAttr</h3>
 $.applyAttr(dest, source) is the method for handeling getter and setter methods:
-  <code>$.applyAttr(Vector.prototype, {
-    getters: {
-      angle: function(){
-        return Math.atan(this.x/this.y);
-      }
-    }
-  })
-  s.angle //=> 0.7853981633974483</p></code>
+  <code>$.applyAttr(Vector.prototype, {<br/>
+    getters: {<br/>
+      angle: function(){<br/>
+        return Math.atan(this.x/this.y);<br/>
+      }<br/>
+    }<br/>
+  })<br/>
+  s.angle; //=> 0.7853981633974483</p></code>
 <h2>Install</h2>
 <p>Paste the protojazz-min.js somewhere on your webspace and put <script src="[scriptsfolder]/protojazz-ie-min.js"></script>
 If you want to use setters and getters, you should include the protojazz-ie-min.js too using <!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]--></p>
 <h2>License</h2>
-<p>Copyright (c) 2011 EDave
+<p>Copyright (c) 2011 EDave</p>
 
-Permission is hereby granted, free of charge, to any person obtaining
+<p>Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 "Software"), to deal in the Software without restriction, including
 without limitation the rights to use, copy, modify, merge, publish,
 distribute, sublicense, and/or sell copies of the Software, and to
 permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
+the following conditions:</p>
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE

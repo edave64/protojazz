@@ -88,6 +88,11 @@
               return !!testobj2.test1();
           })).run();
 
+          (new test ('testing short style instantiation', function () {
+              testobj2 = test2();
+              return !!testobj2.test1();
+          })).run();
+
           var test3,testobj3;
 
           (new test ('testing inheritance', function () {

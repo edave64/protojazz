@@ -1,4 +1,4 @@
-== protojazz v0.4
+== protojazz v0.7
 
 protojazz is a small wrapper around prototypes, similar to the prototype class system
 
@@ -25,6 +25,9 @@ Another syntax for this is:
 Objects can be created with the new opperator
    v = new Vector (3,4);
 
+Objects can also be created by calling the proto object as function.
+   v = Vector(3,4);
+
 $.proto also supports inheritance and accessing overwritten attributes via the
 parent method:
    SqrVector = $.proto(Vector, {
@@ -40,7 +43,7 @@ Static methods can be declared using the "self" attribute:
    Vector = $.proto(Vector, {
      self : {
        create : function (x,y) {
-         return new Vector (x,y);
+         return Vector(x,y);
        }
      },
    })
@@ -76,7 +79,8 @@ IE has its complete own way. Protojazz makes that easy via the "setter" and
      }
    })
    v.length //=> 5
-If you want to use setters and getters, you include the protojazz-ie file:
+If you want to use setters and getters, you should include the protojazz-ie
+file:
   <!--[if gt IE 7]><script src="protojazz-ie-min.js"></script><![endif]-->
 
 === $.extend
@@ -84,7 +88,7 @@ Transfers the attributes of one object to another.
    $.extend($, {
      a : 'aaa'
    })
-   $.a
+   $.a //=> aaa
 
 You may also use a function to extend a object:
    $.extend($, function () {

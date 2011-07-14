@@ -137,7 +137,7 @@
               test52 = $.proto(test51,{
                   passed: true,
                   override: function () {
-                      return this.parent('override') == 'test'
+                      return this.super('override') == 'test'
                   }
               })
               var testobj5 = new test52;

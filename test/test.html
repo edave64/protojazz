@@ -128,7 +128,7 @@
           (new test ('testing mother inherited method', function () {
               test51 = $.proto({
                   self: {
-                      inherited: function (i) { this.passed = i.passed }
+                      inherited: function (i) { this.passed = i.prototype.passed }
                   },
                   override: function () {
                       return 'test';
@@ -137,7 +137,7 @@
               test52 = $.proto(test51,{
                   passed: true,
                   override: function () {
-                      return this.parent('override') == 'test'
+                      return this.super('override') == 'test'
                   }
               })
               var testobj5 = new test52;

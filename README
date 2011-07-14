@@ -22,22 +22,26 @@ Another syntax for this is:
      }
    })
 
-Objects can be created with the new opperator
+Objects can be created with the ''new'' opperator
    v = new Vector (3,4);
 
 Objects can also be created by calling the proto object as function.
    v = Vector(3,4);
 
 $.proto also supports inheritance and accessing overwritten attributes via the
-parent method:
+super method:
    SqrVector = $.proto(Vector, {
      init : function (x) {
-       this.parent('init',x,x)
+       this.super('init',x,x)
      }
    })
+
+If you call the super method without any argument, it returns the constructor
+of the superprototype.
+
 Note: calling something like "Vector = $.proto(Vector, {...})" would work, but
-break the connection between Vector and its Subclasses. To avoid this, use
-$.extend, $.extendP and $.applyAttr.
+breaks the connection between Vector and its instances. To avoid
+this, use $.extend, $.extendP and $.applyAttr.
 
 Static methods can be declared using the "self" attribute:
    Vector = $.proto(Vector, {
@@ -97,10 +101,10 @@ You may also use a function to extend a object:
 
 === $.extendP
 $.extendP(dest, source) is a shortcut for $.extend(dest.prototype, source).
-These changes also effects the Subclasses:
+These changes also effects the instances:
    SqrVector = $.proto(Vector, {
      init : function (x) {
-       this.parent.init.call(this,x,x)
+       this.super('init',x,x)
      }
    })
    s = new SqrVector (3)

@@ -1,0 +1,46 @@
+* { margin: 0; padding: 0; }
+
+html, body {
+	width: 100%;
+}
+
+.test {
+	display: table;
+	width: 100%;
+}
+
+.test:nth-child(odd) {
+	background: #ddd;
+}
+
+.test:hover {
+	background: #ccc;
+}
+
+.test span {
+	width: 50%;
+	display: table-cell;
+}
+
+.ok {
+	text-align: right;
+	color: green;
+	font-family: monospace;
+}
+
+.fail {
+	text-align: right;
+	color: red;
+	font-family: monospace;
+}
+
+.crash {
+	text-align: right;
+	color: red;
+	font-weight: bold;
+	font-family: monospace;
+}
+
+.subsection {
+	margin-left: 32px;
+}

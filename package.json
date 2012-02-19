@@ -1,0 +1,19 @@
+{
+  "author": "EDave <edave@xcvbnm.com> (xcvbnm.com)",
+  "name": "protojazz",
+  "description": "A library that simplifies the handling of constructors (a heretic may call it a class system)",
+  "version": "0.8.0",
+  "keyword": ["prototype", "constructor", "class"],
+  "homepage": "http://edave64.github.com/protojazz/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/edave64/protojazz.git"
+  },
+  "main": "protojazz.js",
+  "engines": {
+    "node": "~0.6.11"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {}
+}
